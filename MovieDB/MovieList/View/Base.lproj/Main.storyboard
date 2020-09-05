@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JOM-cd-CZS">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="ICH-CE-gzt">
+            <objects>
+                <navigationController id="JOM-cd-CZS" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="7HC-zX-Y7f">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.17560099609999999" blue="0.31764705879999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="RFG-mO-Esa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oks-rR-XrX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-851" y="96"/>
+        </scene>
+        <!--Movies-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="MovieListVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MovieListVC" customModule="MovieDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eLx-KJ-Nc4">
+                                <rect key="frame" x="8" y="96" width="398" height="758"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="QJD-82-Uaf"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Z8n-TD-UVW"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="eLx-KJ-Nc4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="3ZY-MH-5wh"/>
+                            <constraint firstItem="eLx-KJ-Nc4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="pMm-SP-E8V"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eLx-KJ-Nc4" secondAttribute="bottom" constant="8" id="sRM-GL-jb2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eLx-KJ-Nc4" secondAttribute="trailing" constant="8" id="uaV-2d-1OE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Movies" id="dgx-R1-MxO">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="V4H-FM-Xj1">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="proccedToSearchAction:" destination="BYZ-38-t0r" id="kWE-G6-u6e"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tblMovieList" destination="eLx-KJ-Nc4" id="zFT-7i-hNV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="96"/>
+        </scene>
+        <!--Search MoviesVC-->
+        <scene sceneID="alF-jT-L7g">
+            <objects>
+                <viewController storyboardIdentifier="SearchMoviesVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GVt-aq-GfT" customClass="SearchMoviesVC" customModule="MovieDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rkh-EH-Ptj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ylA-ge-w50">
+                                <rect key="frame" x="8" y="52" width="398" height="802"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="GVt-aq-GfT" id="jgg-E0-4Hl"/>
+                                    <outlet property="delegate" destination="GVt-aq-GfT" id="TtF-iA-whj"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9Ty-PI-rLx" firstAttribute="trailing" secondItem="ylA-ge-w50" secondAttribute="trailing" constant="8" id="KIx-Ed-O78"/>
+                            <constraint firstItem="9Ty-PI-rLx" firstAttribute="bottom" secondItem="ylA-ge-w50" secondAttribute="bottom" constant="8" id="NYC-ea-Ygv"/>
+                            <constraint firstItem="ylA-ge-w50" firstAttribute="top" secondItem="9Ty-PI-rLx" secondAttribute="top" constant="8" id="bPS-wq-Cx4"/>
+                            <constraint firstItem="ylA-ge-w50" firstAttribute="leading" secondItem="9Ty-PI-rLx" secondAttribute="leading" constant="8" id="vwM-QU-dj3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="9Ty-PI-rLx"/>
+                    </view>
+                    <connections>
+                        <outlet property="tblSearchList" destination="ylA-ge-w50" id="SM0-XD-8qr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0uj-p1-dZ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="993" y="96"/>
+        </scene>
+    </scenes>
+</document>
