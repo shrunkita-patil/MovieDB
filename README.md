@@ -3,9 +3,10 @@
 Book tickets for movies. 
 
 ![Alt Text](https://user-images.githubusercontent.com/45815983/92328758-908f1e00-f080-11ea-9fc7-9d350b9d892a.png)
-![Alt Text](https://user-images.githubusercontent.com/45815983/92328828-14e1a100-f081-11ea-9ce3-f70172b012ec.png)
+![Alt Text](https://user-images.githubusercontent.com/45815983/92329204-84589000-f083-11ea-8264-7c5f5172bf22.png)
 ![Alt Text](https://user-images.githubusercontent.com/45815983/92328823-101ced00-f081-11ea-9e04-24ae75f159a3.png)
 ![Alt Text](https://user-images.githubusercontent.com/45815983/92328827-1317dd80-f081-11ea-8b60-d06be84b0af4.png)
+
 
 # Features!
 
