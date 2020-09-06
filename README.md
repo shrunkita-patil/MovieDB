@@ -5,7 +5,6 @@ Book tickets for movies.
 # Features!
 
   - Watch latest released, upcoming movies
-  - Search movies
   - Watch recently searched movies
   - Watch movie details , read movie reviews
 
@@ -32,3 +31,4 @@ Book tickets for movies.
 1. Used MVVM Architechture
 2. Used Core data to store recently searched movies
 3. Used debounce method to search movies
+4. Added Unit test cases to test Api response.
