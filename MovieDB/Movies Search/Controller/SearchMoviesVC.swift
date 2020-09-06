@@ -21,16 +21,16 @@ class SearchMoviesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addSearchBarButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         searchViewModel.searchList.removeAll()
         initialConfigurations()
+        addSearchBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        removeSearchBar()
+        removeSearchItems()
     }
     
     //MARK:- Initial settings
@@ -59,24 +59,14 @@ class SearchMoviesVC: UIViewController {
     }
     
     //MARK:- Added search bar on navigation
-    func addSearchBarButton() {
-        let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchBtnTapped(_:)))
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+    func addSearchBar() {
         searchBar.delegate = self
-        searchViewModel.searchList.removeAll()
-        searchViewModel.fetchStoredMovies()
-    }
-      
-    //MARK:- Action to Search bar click event
-    @objc func searchBtnTapped(_ sender: UIBarButtonItem) {
-        searchViewModel.searchList.removeAll()
-        self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem = nil
         searchBar.placeholder = "Search for movies"
         searchBar.showsCancelButton = true
+        searchBar.tintColor = UIColor.white
         self.navigationItem.titleView = searchBar
         searchBar.becomeFirstResponder()
+        searchViewModel.searchList.removeAll()
         searchViewModel.fetchStoredMovies()
     }
            
@@ -93,10 +83,10 @@ class SearchMoviesVC: UIViewController {
     }
     
     //MARK:- Remove search from navigation bar
-    func removeSearchBar() {
-        self.navigationItem.titleView = nil
+    func removeSearchItems() {
         searchBar.text = ""
-        addSearchBarButton()
+        searchViewModel.searchList.removeAll()
+        searchViewModel.fetchStoredMovies()
     }
 
 }
@@ -124,7 +114,7 @@ extension SearchMoviesVC: UITableViewDelegate,UITableViewDataSource{
         let dest = UIStoryboard(name: "MovieDetails", bundle: nil).instantiateViewController(withIdentifier: "MovieDetailVC") as! MovieDetailVC
         dest.movieId = searchViewModel.searchList[indexPath.row].id ?? 0
         self.navigationController?.pushViewController(dest, animated: true)
-        removeSearchBar()
+         self.navigationItem.titleView = nil
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -147,11 +137,11 @@ extension SearchMoviesVC: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        removeSearchBar()
+        removeSearchItems()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        removeSearchBar()
+        removeSearchItems()
     }
     
 }
