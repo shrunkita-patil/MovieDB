@@ -29,8 +29,15 @@ class SearchListViewModel: NSObject {
     
     //MARK:- Fetch search list
     func getMovieList(page:Int,query:String){
-       // delegate?.startAnimating()
-        webServices.fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:query, pageNo: page) { [weak self] (response:Result<SearchListModel,ApiError>) in
+        
+        // format url string
+        var urlString = "\(webServices.baseURL)/movie"
+        urlString = "\(webServices.baseURL)\(Endpoint.search.rawValue)?api_key=\(webServices.key)"
+        urlString.append("&query=\(query)")
+        urlString.append("&page=\(page)")
+        print(urlString)
+
+        webServices.fetchResponse(urlString: urlString, withMethod: .get) { [weak self] (response:Result<SearchListModel,ApiError>) in
            // self?.delegate?.stopAnimating()
             switch response{
             case .failure(let error):

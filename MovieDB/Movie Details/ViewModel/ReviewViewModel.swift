@@ -31,7 +31,17 @@ class ReviewViewModel: NSObject {
     
     // MARK: - Method to fetch reviews
     func getMovieReviews(parameters:[String:Any],pageNo:Int){
-          webServices.fetchResponse(endPoint: .reviews, withMethod: .get, forParamters: parameters,pageNo: pageNo) { [weak self] (response:Result<ReviewsModel,ApiError>) in
+        
+        var urlString = "\(webServices.baseURL)/movie"
+            for eachKey in parameters.keys {
+                urlString.append("/\(parameters[eachKey]!)")
+            }
+        urlString.append("\(Endpoint.reviews.rawValue)")
+        urlString.append("?api_key=\(webServices.key)")
+        urlString.append("&page=\(pageNo)")
+        print("Url string : \(urlString)")
+        
+        webServices.fetchResponse(urlString: urlString, withMethod: .get) { [weak self] (response:Result<ReviewsModel,ApiError>) in
               switch response{
               case .failure(let error):
                   self?.reviewDelegate?.onFailure(failure: error.errorDescription)

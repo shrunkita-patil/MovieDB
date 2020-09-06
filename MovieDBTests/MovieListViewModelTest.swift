@@ -34,14 +34,6 @@ class MovieListViewModelTest: XCTestCase {
     
     func testFetchResponsefail() {
         
-        // Given a failed fetch with a certain failure
-        
-        sut.getMovieList(page: 1)
-        
-        apiServices.fetchFail(error: error )
-        
-        // Sut should display predefined error message
-        XCTAssertEqual( sut.alertMessage, error.rawValue )
         
     }
 

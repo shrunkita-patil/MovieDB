@@ -32,7 +32,17 @@ class MovieListViewModel {
     // MARK: - Method to fetch movie list
     func getMovieList(page:Int){
         delegate?.startAnimating()
-        webServices.fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: page) { [weak self] (response:Result<MovieListModel,ApiError>) in
+        
+        // Check parameters for GET method
+        var urlString = "\(webServices.baseURL)/movie"
+        urlString.append("\(Endpoint.playing.rawValue)")
+        urlString.append("?api_key=\(webServices.key)")
+        print("Url string : \(urlString)")
+         if pageNo != 0{
+                urlString.append("&page=\(pageNo)")
+            }
+        
+        webServices.fetchResponse(urlString:urlString,withMethod: .get) { [weak self] (response:Result<MovieListModel,ApiError>) in
             self?.delegate?.stopAnimating()
             switch response{
             case .failure(let error):

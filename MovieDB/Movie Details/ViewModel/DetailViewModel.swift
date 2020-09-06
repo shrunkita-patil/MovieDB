@@ -26,7 +26,8 @@ class DetailViewModel: NSObject {
     var cast : [CastModel] = []
     var crew : [CrewModel] = []
     var similarMovies : [MovieList] = []
-     var webServices : WebService
+    var webServices : WebService
+
     
     init(apiService: WebService = WebService()) {
             self.webServices = apiService
@@ -35,11 +36,20 @@ class DetailViewModel: NSObject {
     //MARK:- Fetch movie details from api
     func getMovieDetails(parameters:[String:Any]){
         delegate?.startAnimating()
+        
+        var urlString = "\(webServices.baseURL)/movie"
+            for eachKey in parameters.keys {
+                urlString.append("/\(parameters[eachKey]!)")
+            }
+        urlString.append("\(Endpoint.movieDetail.rawValue)")
+        urlString.append("?api_key=\(webServices.key)")
+        print("Url string : \(urlString)")
+
         let dispatchGroup = DispatchGroup()
         
         //MARK:- Movie synopsis network call
         dispatchGroup.enter()
-        webServices.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<MovieDetailModel,ApiError>) in
+        webServices.fetchResponse(urlString: urlString,withMethod: .get) { [weak self] (response:Result<MovieDetailModel,ApiError>) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)
@@ -51,8 +61,17 @@ class DetailViewModel: NSObject {
         }
         
         //MARK:- Movie credits network call
+        
+        var urlStringCredits = "\(webServices.baseURL)/movie"
+            for eachKey in parameters.keys {
+                urlStringCredits.append("/\(parameters[eachKey]!)")
+            }
+        urlStringCredits.append("\(Endpoint.credits.rawValue)")
+        urlStringCredits.append("?api_key=\(webServices.key)")
+        print("Url string : \(urlString)")
+        
         dispatchGroup.enter()
-        WebService().fetchResponse(endPoint: .credits, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<CreditsModel,ApiError>) in
+        WebService().fetchResponse(urlString: urlStringCredits,withMethod: .get) { [weak self] (response:Result<CreditsModel,ApiError>) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)
@@ -66,8 +85,17 @@ class DetailViewModel: NSObject {
         }
         
        //MARK:- Similar movies network call
+        
+        var urlStringSimilar = "\(webServices.baseURL)/movie"
+            for eachKey in parameters.keys {
+                urlStringSimilar.append("/\(parameters[eachKey]!)")
+            }
+        urlStringSimilar.append("\(Endpoint.similar.rawValue)")
+        urlStringSimilar.append("?api_key=\(webServices.key)")
+        print("Url string : \(urlString)")
+        
         dispatchGroup.enter()
-        WebService().fetchResponse(endPoint: .similar, withMethod: .get, forParamters: parameters,pageNo: 1) { [weak self] (response:Result<MovieListModel,ApiError>) in
+        WebService().fetchResponse(urlString: urlStringSimilar,withMethod: .get) { [weak self] (response:Result<MovieListModel,ApiError>) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)
