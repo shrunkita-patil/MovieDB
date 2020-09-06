@@ -32,3 +32,4 @@ Book tickets for movies.
 1. Used MVVM Architechture
 2. Used Core data to store recently searched movies
 3. Used debounce method to search movies
+4. Added Unit test cases to test Api response.
