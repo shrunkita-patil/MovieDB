@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Delegate methods to notify about response status
-protocol ReviewModelOutput {
+protocol ReviewModelOutput: class {
     func startAnimating()
     func stopAnimating()
     func onLoadReviews(with details: [UserReview])
@@ -19,14 +19,19 @@ protocol ReviewModelOutput {
 class ReviewViewModel: NSObject {
     
     // MARK: - Properties
-    var reviewDelegate: ReviewModelOutput?
+    weak var reviewDelegate: ReviewModelOutput?
     var reviews : [UserReview] = []
     var pageNo = Int()
     var totalPage = Int()
+    var webServices : WebService
+    
+    init(apiService: WebService = WebService()) {
+            self.webServices = apiService
+    }
     
     // MARK: - Method to fetch reviews
     func getMovieReviews(parameters:[String:Any],pageNo:Int){
-          WebService().fetchResponse(endPoint: .reviews, withMethod: .get, forParamters: parameters,pageNo: pageNo) { [weak self] (response:Result<ReviewsModel,ApiError>, data) in
+          webServices.fetchResponse(endPoint: .reviews, withMethod: .get, forParamters: parameters,pageNo: pageNo) { [weak self] (response:Result<ReviewsModel,ApiError>) in
               switch response{
               case .failure(let error):
                   self?.reviewDelegate?.onFailure(failure: error.errorDescription)

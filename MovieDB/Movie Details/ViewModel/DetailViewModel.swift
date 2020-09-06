@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Delegate methods to notify about response status
-protocol DetailViewModelOutput {
+protocol DetailViewModelOutput : class{
     func startAnimating()
     func stopAnimating()
     func onresult()
@@ -22,10 +22,15 @@ protocol DetailViewModelOutput {
 class DetailViewModel: NSObject {
     
       //MARK:- Properties
-    var delegate: DetailViewModelOutput?
+    weak var delegate: DetailViewModelOutput?
     var cast : [CastModel] = []
     var crew : [CrewModel] = []
     var similarMovies : [MovieList] = []
+     var webServices : WebService
+    
+    init(apiService: WebService = WebService()) {
+            self.webServices = apiService
+    }
     
     //MARK:- Fetch movie details from api
     func getMovieDetails(parameters:[String:Any]){
@@ -34,7 +39,7 @@ class DetailViewModel: NSObject {
         
         //MARK:- Movie synopsis network call
         dispatchGroup.enter()
-        WebService().fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<MovieDetailModel,ApiError>, data) in
+        webServices.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<MovieDetailModel,ApiError>) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)
@@ -47,7 +52,7 @@ class DetailViewModel: NSObject {
         
         //MARK:- Movie credits network call
         dispatchGroup.enter()
-        WebService().fetchResponse(endPoint: .credits, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<CreditsModel,ApiError>, data) in
+        WebService().fetchResponse(endPoint: .credits, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<CreditsModel,ApiError>) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)
@@ -62,7 +67,7 @@ class DetailViewModel: NSObject {
         
        //MARK:- Similar movies network call
         dispatchGroup.enter()
-        WebService().fetchResponse(endPoint: .similar, withMethod: .get, forParamters: parameters,pageNo: 1) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
+        WebService().fetchResponse(endPoint: .similar, withMethod: .get, forParamters: parameters,pageNo: 1) { [weak self] (response:Result<MovieListModel,ApiError>) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)

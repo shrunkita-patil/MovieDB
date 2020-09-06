@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Delegate methods to notify about response status
-protocol MovieListViewModelOutput {
+protocol MovieListViewModelOutput: class {
     func startAnimating()
     func stopAnimating()
     func onresult(with list: [MovieList],pageNo: Int,totalPages: Int)
@@ -20,14 +20,19 @@ class MovieListViewModel {
     
     // MARK: - Properties
     var movieList : [MovieList] = []
-    var delegate: MovieListViewModelOutput?
+    weak var delegate: MovieListViewModelOutput?
     var pageNo = 1
     var totalpages = 0
+    var webServices : WebService
+    
+    init(apiService: WebService = WebService()) {
+         self.webServices = apiService
+     }
     
     // MARK: - Method to fetch movie list
     func getMovieList(page:Int){
         delegate?.startAnimating()
-        WebService().fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: page) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
+        webServices.fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: page) { [weak self] (response:Result<MovieListModel,ApiError>) in
             self?.delegate?.stopAnimating()
             switch response{
             case .failure(let error):

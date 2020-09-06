@@ -20,7 +20,7 @@ class WebService {
     let imageBaseURL = "https://image.tmdb.org/t/p/w500"
     
     // MARK: - Fetch data from api
-    func fetchResponse<T:Codable>(endPoint api: Endpoint, withMethod method: HTTPMethod, forParamters parameters: [String:Any]? = nil,searchQuery: String? = nil,pageNo:Int, completion: @escaping(Result<T,ApiError>,_ responseData:Data?) -> Void) {
+    func fetchResponse<T:Codable>(endPoint api: Endpoint, withMethod method: HTTPMethod, forParamters parameters: [String:Any]? = nil,searchQuery: String? = nil,pageNo:Int, completion: @escaping(Result<T,ApiError>) -> Void) {
         
         // Check network connection
         guard checkForNetworkConnectivity() else {
@@ -53,6 +53,12 @@ class WebService {
                     urlString.append("&page=\(pageNo)")
                  }
                 
+//        if parameters != nil{
+//            for (eachKey,eachValue) in parameters! {
+//                urlString.append("/\(parameters![eachKey]!)=\(parameters![eachValue as! String]!)")
+//            }
+//        }
+        
              request = URLRequest(url: URL(string: urlString.replacingOccurrences(of: " ", with: "%20"))!)
         
         
@@ -64,13 +70,13 @@ class WebService {
                 guard let data = data else { return }
                 do{
                     let decodedData = try JSONDecoder().decode(T.self, from: data)
-                    completion(.success(decodedData), data)
+                    completion(.success(decodedData))
                  } catch let error {
                     print(error.localizedDescription)
-                    completion(.failure(.errorMsg(message: ResponseError.JSONSerializationFailed.errorDescription ?? "")), data)
+                    completion(.failure(.errorMsg(message: ResponseError.JSONSerializationFailed.errorDescription ?? "")))
                }
             } else {
-                completion(.failure(.errorMsg(message: ResponseError.wrongData.errorDescription ?? "")), data)
+                completion(.failure(.errorMsg(message: ResponseError.wrongData.errorDescription ?? "")))
             }
         }.resume()
     }

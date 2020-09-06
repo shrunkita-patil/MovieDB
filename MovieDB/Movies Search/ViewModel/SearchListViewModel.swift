@@ -8,22 +8,29 @@
 
 import Foundation
 
-protocol SearchListViewModelOutput {
+protocol SearchListViewModelOutput: class {
     func onresult(with list: [SearchMovies],pageNo: Int,totalPages: Int)
     func onFailure(failure: String)
 }
 
 class SearchListViewModel: NSObject {
     
+    //MARK:- Properties
     var searchList : [SearchMovies] = []
-    var delegate: SearchListViewModelOutput?
+    weak var delegate: SearchListViewModelOutput?
     var pageNo = 1
     var totalpages = 0
     var storedMovies = MovieDatabase()
+    var webServices : WebService
     
+    init(apiService: WebService = WebService()) {
+         self.webServices = apiService
+     }
+    
+    //MARK:- Fetch search list
     func getMovieList(page:Int,query:String){
        // delegate?.startAnimating()
-        WebService().fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:query, pageNo: page) { [weak self] (response:Result<SearchListModel,ApiError>, data) in
+        webServices.fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:query, pageNo: page) { [weak self] (response:Result<SearchListModel,ApiError>) in
            // self?.delegate?.stopAnimating()
             switch response{
             case .failure(let error):
@@ -37,6 +44,7 @@ class SearchListViewModel: NSObject {
         }
     }
     
+    //MARK:- Fetch stored movie list
     func fetchStoredMovies(){
         self.storedMovies.fetchAllRecord()
         if storedMovies.movies.count != 0{
