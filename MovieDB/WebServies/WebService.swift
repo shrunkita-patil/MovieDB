@@ -12,6 +12,7 @@ import UIKit
 
 class WebService {
     
+    // MARK: - Properties
     static let shared = WebService()
     fileprivate init() {}
     private let baseURL = "https://api.themoviedb.org/3" // Base url
@@ -21,10 +22,13 @@ class WebService {
     // MARK: - Fetch data from api
     func fetchResponse<T:Codable>(endPoint api: Endpoint, withMethod method: HTTPMethod, forParamters parameters: [String:Any]? = nil,searchQuery: String? = nil,pageNo:Int, completion: @escaping(Result<T,ApiError>,_ responseData:Data?) -> Void) {
         
+        // Check network connection
         guard checkForNetworkConnectivity() else {
+            DispatchQueue.main.async{
                MovieAlertVC.shared.presentAlertController(title: "Connection Problem", message: "Please check your internet connection!", completionHandler: nil)
-                 return
-             }
+            }
+            return
+        }
         
         var request: URLRequest!
 
@@ -59,8 +63,6 @@ class WebService {
             if err == nil {
                 guard let data = data else { return }
                 do{
-                    let responseData = try JSONSerialization.jsonObject(with: data, options:JSONSerialization.ReadingOptions.allowFragments) as! [String:Any]
-                    print(responseData)
                     let decodedData = try JSONDecoder().decode(T.self, from: data)
                     completion(.success(decodedData), data)
                  } catch let error {
@@ -72,9 +74,6 @@ class WebService {
             }
         }.resume()
     }
-    
-     func getStoredImage(from imageURLFound: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: imageURLFound, completionHandler: completion).resume()
-    }
+
 }
 

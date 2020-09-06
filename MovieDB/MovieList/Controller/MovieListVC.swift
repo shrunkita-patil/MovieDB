@@ -10,33 +10,42 @@ import UIKit
 
 class MovieListVC: UIViewController {
 
+    // MARK: - Outlets
     @IBOutlet weak var tblMovieList: UITableView!
     
+    // MARK: - Properties
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var viewModel = MovieListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initialConfigurations()
+        setupActivityIndicator()
         // Do any additional setup after loading the view.
     }
     
+    // MARK: - Initial settings
     func initialConfigurations(){
         self.tblMovieList.register(UINib(nibName: "MovieListTVC", bundle: nil), forCellReuseIdentifier: "MovieListTVC")
         viewModel.delegate = self
         viewModel.getMovieList(page: 1)
+        self.tblMovieList.tableFooterView = UIView()
     }
     
+    //MARK:- Setup indicator while loading data
+    private func setupActivityIndicator() {
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.medium
+        self.view.addSubview(activityIndicator)
+    }
+
+    
+    // MARK: - Method to search movies
     @IBAction func proccedToSearchAction(_ sender: UIBarButtonItem) {
         let dest = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchMoviesVC") as! SearchMoviesVC
-        self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor =  UIColor(red: 129/255, green: 187/255, blue: 49/255, alpha: 1)
-        self.navigationController?.navigationBar.backItem?.backBarButtonItem?.style = .plain
         self.navigationController?.pushViewController(dest, animated: true)
     }
-    
-
 }
 
 extension MovieListVC: UITableViewDelegate,UITableViewDataSource{
@@ -63,10 +72,6 @@ extension MovieListVC : MovieListViewModelOutput,MovieDetailAction{
     func proccedToDetail(id: Int) {
         let dest = UIStoryboard(name: "MovieDetails", bundle: nil).instantiateViewController(withIdentifier: "MovieDetailVC") as! MovieDetailVC
         dest.movieId = id
-        self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.barTintColor =  UIColor(red: 129/255, green: 187/255, blue: 49/255, alpha: 1)
-        self.navigationController?.navigationBar.backItem?.backBarButtonItem?.style = .plain
         self.navigationController?.pushViewController(dest, animated: true)
     }
     
@@ -84,7 +89,9 @@ extension MovieListVC : MovieListViewModelOutput,MovieDetailAction{
     
     func onresult(with list: [MovieList], pageNo: Int, totalPages: Int) {
         if list.count == 0 {
-            MovieAlertVC.shared.presentAlertController(title: "Opps", message: ResponseError.noMatchigResults.errorDescription ?? "", completionHandler: nil)
+            DispatchQueue.main.async{
+                MovieAlertVC.shared.presentAlertController(title: "Opps", message: ResponseError.noMatchigResults.errorDescription ?? "", completionHandler: nil)
+            }
             }
         DispatchQueue.main.async {
             self.tblMovieList.reloadData()
@@ -92,7 +99,9 @@ extension MovieListVC : MovieListViewModelOutput,MovieDetailAction{
     }
     
     func onFailure(failure: String) {
-        MovieAlertVC.shared.presentAlertController(title: "Failed", message: failure, completionHandler: nil)
+        DispatchQueue.main.async{
+            MovieAlertVC.shared.presentAlertController(title: "Failed", message: failure, completionHandler: nil)
+        }
     }
     
     

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Store Movie List data
 struct MovieListModel: Codable {
     let results: [MovieList]
     let total_pages: Int?

@@ -6,6 +6,8 @@ target 'MovieDB' do
   use_frameworks!
 
   # Pods for MovieDB
+  
+  pod 'Kingfisher'
 
   target 'MovieDBTests' do
     inherit! :search_paths

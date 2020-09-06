@@ -19,34 +19,37 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0h-PU-oVN">
                         <rect key="frame" x="0.0" y="0.0" width="294" height="98"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tAl-9f-BHj">
-                                <rect key="frame" x="65.5" y="22" width="104" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tAl-9f-BHj">
+                                <rect key="frame" x="66" y="16" width="220" height="21.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Release date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xv0-tj-muV">
-                                <rect key="frame" x="65.5" y="55" width="94" height="20"/>
+                                <rect key="frame" x="66" y="49.5" width="216" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jc3-ib-ce6">
-                                <rect key="frame" x="16" y="32.5" width="33.5" height="33"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Movie" translatesAutoresizingMaskIntoConstraints="NO" id="jc3-ib-ce6">
+                                <rect key="frame" x="16" y="32" width="34" height="34"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="VaN-7U-H8j"/>
                                     <constraint firstAttribute="width" secondItem="jc3-ib-ce6" secondAttribute="height" multiplier="1:1" id="sC8-iU-LhW"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="tAl-9f-BHj" firstAttribute="centerY" secondItem="jc3-ib-ce6" secondAttribute="centerY" constant="-16" id="76E-uR-tt6"/>
+                            <constraint firstItem="tAl-9f-BHj" firstAttribute="top" secondItem="M0h-PU-oVN" secondAttribute="top" constant="16" id="282-fg-GqJ"/>
                             <constraint firstItem="xv0-tj-muV" firstAttribute="leading" secondItem="jc3-ib-ce6" secondAttribute="trailing" constant="16" id="8R1-JN-3EH"/>
                             <constraint firstItem="jc3-ib-ce6" firstAttribute="leading" secondItem="M0h-PU-oVN" secondAttribute="leading" constant="16" id="FbP-oN-Q7q"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xv0-tj-muV" secondAttribute="bottom" constant="16" id="G5Y-uI-5dh"/>
                             <constraint firstItem="tAl-9f-BHj" firstAttribute="leading" secondItem="jc3-ib-ce6" secondAttribute="trailing" constant="16" id="Gqe-s5-YS4"/>
-                            <constraint firstItem="jc3-ib-ce6" firstAttribute="height" secondItem="M0h-PU-oVN" secondAttribute="height" multiplier="0.34" id="QXl-Xk-mxa"/>
+                            <constraint firstAttribute="trailing" secondItem="tAl-9f-BHj" secondAttribute="trailing" constant="8" id="XkE-WG-bIB"/>
+                            <constraint firstItem="xv0-tj-muV" firstAttribute="top" secondItem="tAl-9f-BHj" secondAttribute="bottom" constant="12" id="Xyu-MW-hLM"/>
+                            <constraint firstAttribute="trailing" secondItem="xv0-tj-muV" secondAttribute="trailing" constant="12" id="cNg-Ec-TnN"/>
                             <constraint firstItem="jc3-ib-ce6" firstAttribute="centerY" secondItem="M0h-PU-oVN" secondAttribute="centerY" id="fut-CW-9S9"/>
-                            <constraint firstItem="xv0-tj-muV" firstAttribute="centerY" secondItem="jc3-ib-ce6" secondAttribute="centerY" constant="16" id="xb8-HM-SJ1"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -65,4 +68,7 @@
             <point key="canvasLocation" x="118.84057971014494" y="128.57142857142856"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Movie" width="512" height="512"/>
+    </resources>
 </document>

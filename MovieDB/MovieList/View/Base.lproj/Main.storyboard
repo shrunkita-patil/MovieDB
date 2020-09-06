@@ -51,7 +51,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="dgx-R1-MxO">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="V4H-FM-Xj1">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="V4H-FM-Xj1">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="proccedToSearchAction:" destination="BYZ-38-t0r" id="kWE-G6-u6e"/>
@@ -75,19 +75,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ylA-ge-w50">
-                                <rect key="frame" x="8" y="52" width="398" height="802"/>
+                                <rect key="frame" x="8" y="93" width="398" height="761"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="GVt-aq-GfT" id="jgg-E0-4Hl"/>
                                     <outlet property="delegate" destination="GVt-aq-GfT" id="TtF-iA-whj"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently searched movies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUr-ZC-SUY">
+                                <rect key="frame" x="16" y="60" width="217" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.1764705882352941" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="9Ty-PI-rLx" firstAttribute="trailing" secondItem="ylA-ge-w50" secondAttribute="trailing" constant="8" id="KIx-Ed-O78"/>
                             <constraint firstItem="9Ty-PI-rLx" firstAttribute="bottom" secondItem="ylA-ge-w50" secondAttribute="bottom" constant="8" id="NYC-ea-Ygv"/>
-                            <constraint firstItem="ylA-ge-w50" firstAttribute="top" secondItem="9Ty-PI-rLx" secondAttribute="top" constant="8" id="bPS-wq-Cx4"/>
+                            <constraint firstItem="qUr-ZC-SUY" firstAttribute="leading" secondItem="9Ty-PI-rLx" secondAttribute="leading" constant="16" id="WMn-4g-PLX"/>
+                            <constraint firstItem="qUr-ZC-SUY" firstAttribute="top" secondItem="9Ty-PI-rLx" secondAttribute="top" constant="16" id="hDe-dt-2SJ"/>
+                            <constraint firstItem="ylA-ge-w50" firstAttribute="top" secondItem="qUr-ZC-SUY" secondAttribute="bottom" constant="12" id="kaK-Ku-Ja5"/>
                             <constraint firstItem="ylA-ge-w50" firstAttribute="leading" secondItem="9Ty-PI-rLx" secondAttribute="leading" constant="8" id="vwM-QU-dj3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9Ty-PI-rLx"/>
@@ -98,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0uj-p1-dZ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="993" y="96"/>
+            <point key="canvasLocation" x="992.75362318840587" y="95.758928571428569"/>
         </scene>
     </scenes>
 </document>

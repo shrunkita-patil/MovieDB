@@ -8,6 +8,7 @@
 
 import Foundation
 
+//MARK:- Movie Synopsis model
 struct MovieDetailModel: Codable {
     let id: Int?
     let poster_path: String?
@@ -16,6 +17,7 @@ struct MovieDetailModel: Codable {
     var vote_average: Float?
     var overview: String?
     var popularity: Float?
+    var status : String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -25,9 +27,11 @@ struct MovieDetailModel: Codable {
         case vote_average
         case overview
         case popularity
+        case status
     }
 }
 
+//MARK:- Movvie credit model
 struct CreditsModel: Codable {
     let cast: [CastModel]
     let crew: [CrewModel]
@@ -38,6 +42,7 @@ struct CreditsModel: Codable {
     }
 }
 
+//MARK:- Movie cast list model
 struct CastModel: Codable {
     let cast_id: Int?
     let name: String?
@@ -52,6 +57,7 @@ struct CastModel: Codable {
     }
 }
 
+//MARK:- Movie crew list model
 struct CrewModel: Codable {
     let id: Int?
     let name: String?
@@ -66,3 +72,21 @@ struct CrewModel: Codable {
     }
 }
 
+//MARK:- Movie reviews model
+struct ReviewsModel: Codable {
+    let results: [UserReview]
+    
+    enum CodingKeys: String, CodingKey {
+        case results
+    }
+}
+
+struct UserReview: Codable {
+    let author: String?
+    let content: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case author
+        case content
+    }
+}

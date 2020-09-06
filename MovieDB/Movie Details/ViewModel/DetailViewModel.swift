@@ -8,26 +8,31 @@
 
 import Foundation
 
+// MARK: - Delegate methods to notify about response status
 protocol DetailViewModelOutput {
     func startAnimating()
     func stopAnimating()
     func onresult()
     func onLoadSynopsis(with details: MovieDetailModel)
     func onLoadCredits(with details: CreditsModel)
+    func onLoadSimilarMovies(with details: [MovieList])
     func onFailure(failure: String)
 }
 
 class DetailViewModel: NSObject {
     
+      //MARK:- Properties
     var delegate: DetailViewModelOutput?
     var cast : [CastModel] = []
     var crew : [CrewModel] = []
+    var similarMovies : [MovieList] = []
     
+    //MARK:- Fetch movie details from api
     func getMovieDetails(parameters:[String:Any]){
         delegate?.startAnimating()
         let dispatchGroup = DispatchGroup()
         
-            //Movie Synopsis
+        //MARK:- Movie synopsis network call
         dispatchGroup.enter()
         WebService.shared.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<MovieDetailModel,ApiError>, data) in
             switch response{
@@ -40,7 +45,7 @@ class DetailViewModel: NSObject {
             }
         }
         
-        // Movie Credits
+        //MARK:- Movie credits network call
         dispatchGroup.enter()
         WebService.shared.fetchResponse(endPoint: .credits, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<CreditsModel,ApiError>, data) in
             switch response{
@@ -55,18 +60,19 @@ class DetailViewModel: NSObject {
             }
         }
         
-//        // Similar movies
-//        dispatchGroup.enter()
-//        WebService.shared.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: nil,pageNo: 0) { [weak self] (response:Result<MovieDetailModel,ApiError>, data) in
-//            switch response{
-//            case .failure(let error):
-//                self?.delegate?.onFailure(failure: error.errorDescription)
-//                dispatchGroup.leave()
-//            case .success(let resp):
-//               // self?.delegate?.onresult(with: resp)
-//                dispatchGroup.leave()
-//            }
-//        }
+       //MARK:- Similar movies network call
+        dispatchGroup.enter()
+        WebService.shared.fetchResponse(endPoint: .similar, withMethod: .get, forParamters: parameters,pageNo: 1) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
+            switch response{
+            case .failure(let error):
+                self?.delegate?.onFailure(failure: error.errorDescription)
+                dispatchGroup.leave()
+            case .success(let resp):
+                self?.similarMovies += resp.results
+                self?.delegate?.onLoadSimilarMovies(with: resp.results)
+                dispatchGroup.leave()
+            }
+        }
         
         //Finish
         dispatchGroup.notify(queue: .main) {

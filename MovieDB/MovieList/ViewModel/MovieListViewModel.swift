@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Delegate methods to notify about response status
 protocol MovieListViewModelOutput {
     func startAnimating()
     func stopAnimating()
@@ -17,11 +18,13 @@ protocol MovieListViewModelOutput {
 
 class MovieListViewModel {
     
+    // MARK: - Properties
     var movieList : [MovieList] = []
     var delegate: MovieListViewModelOutput?
     var pageNo = 1
     var totalpages = 0
     
+    // MARK: - Method to fetch movie list
     func getMovieList(page:Int){
         delegate?.startAnimating()
         WebService.shared.fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: page) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
@@ -39,20 +42,5 @@ class MovieListViewModel {
     }
 }
 
-extension MovieListViewModel {
-    
-    func startAnimating() {
-        delegate?.startAnimating()
-    }
-    
-    func stopAnimating() {
-        delegate?.stopAnimating()
-    }
-    
-    func onresult() {
-        delegate?.onresult(with: movieList, pageNo: self.pageNo, totalPages: self.totalpages)
-    }
-    
-}
 
 

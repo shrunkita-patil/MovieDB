@@ -10,6 +10,7 @@ import UIKit
 
 class SearchMovieTVC: UITableViewCell {
 
+    //MARK:- Outlets
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var releaseDate: UILabel!
     
@@ -24,9 +25,19 @@ class SearchMovieTVC: UITableViewCell {
         // Configure the view for the selected state
     }
     
+     //MARK:- Setup search cell
     func setupCell(list:SearchMovies){
         self.movieName.text = list.title
-        self.releaseDate.text = list.release_date
+        let date = convertDateFormater(list.release_date ?? "")
+        self.releaseDate.text = date
     }
     
+    //MARK:- Method to Convert date
+     func convertDateFormater(_ date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: date)
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+        return  dateFormatter.string(from: date!)
+    }
 }

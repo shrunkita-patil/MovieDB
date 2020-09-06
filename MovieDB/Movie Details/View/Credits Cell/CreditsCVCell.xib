@@ -19,24 +19,29 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rgw-aj-fsO">
                         <rect key="frame" x="0.0" y="0.0" width="131" height="146"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZEQ-Sp-aTG">
-                                <rect key="frame" x="0.0" y="0.0" width="131" height="110"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZEQ-Sp-aTG">
+                                <rect key="frame" x="0.0" y="0.0" width="131" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="110" id="YrR-NE-KvJ"/>
+                                    <constraint firstAttribute="height" constant="120" id="YrR-NE-KvJ"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Character" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3x4-jT-rhe">
-                                <rect key="frame" x="16" y="118" width="99" height="20"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <rect key="frame" x="16" y="124" width="99" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5l-tk-tWL">
-                                <rect key="frame" x="0.0" y="82.5" width="131" height="27.5"/>
+                                <rect key="frame" x="0.0" y="91" width="131" height="25"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mv6-dz-gIi">
-                                        <rect key="frame" x="16" y="4" width="99" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mv6-dz-gIi">
+                                        <rect key="frame" x="16" y="4" width="99" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -50,7 +55,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="3x4-jT-rhe" secondAttribute="trailing" constant="16" id="0Tf-Ld-mbF"/>
                             <constraint firstItem="3x4-jT-rhe" firstAttribute="leading" secondItem="rgw-aj-fsO" secondAttribute="leading" constant="16" id="5CE-Wz-1U6"/>
@@ -59,10 +64,15 @@
                             <constraint firstItem="o5l-tk-tWL" firstAttribute="trailing" secondItem="ZEQ-Sp-aTG" secondAttribute="trailing" id="RBt-YQ-Th9"/>
                             <constraint firstItem="ZEQ-Sp-aTG" firstAttribute="leading" secondItem="rgw-aj-fsO" secondAttribute="leading" id="S3H-yZ-lec"/>
                             <constraint firstItem="o5l-tk-tWL" firstAttribute="leading" secondItem="ZEQ-Sp-aTG" secondAttribute="leading" id="Ui5-TN-EdI"/>
-                            <constraint firstItem="o5l-tk-tWL" firstAttribute="bottom" secondItem="ZEQ-Sp-aTG" secondAttribute="bottom" id="b0t-rh-3W7"/>
-                            <constraint firstAttribute="bottom" secondItem="3x4-jT-rhe" secondAttribute="bottom" constant="8" id="doM-xF-UmF"/>
-                            <constraint firstItem="3x4-jT-rhe" firstAttribute="top" secondItem="ZEQ-Sp-aTG" secondAttribute="bottom" constant="8" id="jAd-N3-vHb"/>
+                            <constraint firstItem="o5l-tk-tWL" firstAttribute="bottom" secondItem="ZEQ-Sp-aTG" secondAttribute="bottom" constant="-4" id="b0t-rh-3W7"/>
+                            <constraint firstAttribute="bottom" secondItem="3x4-jT-rhe" secondAttribute="bottom" constant="4" id="doM-xF-UmF"/>
+                            <constraint firstItem="3x4-jT-rhe" firstAttribute="top" secondItem="ZEQ-Sp-aTG" secondAttribute="bottom" constant="4" id="jAd-N3-vHb"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol MovieDetailAction {
     func proccedToDetail(id:Int)
@@ -14,17 +15,23 @@ protocol MovieDetailAction {
 
 class MovieListTVC: UITableViewCell {
 
+    //MARK:- Outlets
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var posterImg: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var bookNowBtn: UIButton!
     
+    //MARK:- Properties
     var delegate: MovieDetailAction?
     var movieId = Int()
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupShadow()
+        self.bookNowBtn.layer.borderColor = UIColor.init(named: "002D51")?.cgColor
+        self.bookNowBtn.layer.borderWidth = 1
         // Initialization code
     }
 
@@ -34,38 +41,34 @@ class MovieListTVC: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    //MARK:- Setup Movie list details
         func setupCell(movieData:MovieList){
-    //        let posterImage = URL(string: "\(WebServices.shared.imageBaseURL)\(movieData.poster_path ?? "")") ?? nil
-    //        WebServices.shared.getStoredImage(from: posterImage!) { data, response, error in
-    //                     guard let data = data, error == nil else { return }
-    //                     DispatchQueue.main.async() {
-    //                         self.posterImg.image = UIImage(data: data)
-    //                     }
-    //            }
             self.movieId = movieData.id ?? 0
-            self.posterImg.image = UIImage(named: "")
-            setImage(from: "\(WebService.shared.imageBaseURL)\(movieData.poster_path ?? "")")
+             self.posterImg.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(movieData.poster_path ?? "")"), placeholder: #imageLiteral(resourceName: "movie-poster"), options: nil, progressBlock: nil)
             self.titleLabel.text = movieData.title
-            self.releaseDateLabel.text = movieData.release_date
+            let date = convertDateFormater(movieData.release_date ?? "")
+            self.releaseDateLabel.text = date
             self.voteCountLabel.text = "\(movieData.vote_count ?? 0)"
             self.bookNowBtn.addTarget(self, action: #selector(self.proccedToMovieDetail(_:)), for: .touchUpInside)
         }
         
-        func setImage(from url: String) {
-            guard let imageURL = URL(string: url) else { return }
-
-                // just not to cause a deadlock in UI!
-            DispatchQueue.global().async {
-                guard let imageData = try? Data(contentsOf: imageURL) else { return }
-
-                let image = UIImage(data: imageData)
-                DispatchQueue.main.async {
-                    self.posterImg.image = image
-                }
-            }
-        }
-    
+    //MARK:- Add action to book movie
     @objc func proccedToMovieDetail(_ sender:UIButton){
         delegate?.proccedToDetail(id: movieId)
+    }
+    
+    //MARK:- Add shadow to parent view
+    func setupShadow(){
+        containerView.setupRadiusAndShadow(shadowColor: UIColor.lightGray
+            ,cornerRadius: 0, shadowRadius: 3, shadowWidth: 3, shadowHeight: 0, shadowOpacity: 1)
+    }
+    
+    //MARK:- Method to Convert date
+     func convertDateFormater(_ date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = dateFormatter.date(from: date)
+        dateFormatter.dateFormat = "MMM dd, yyyy"
+        return  dateFormatter.string(from: date!)
     }
 }

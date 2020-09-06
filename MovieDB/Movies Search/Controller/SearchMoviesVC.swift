@@ -9,9 +9,11 @@
 import UIKit
 
 class SearchMoviesVC: UIViewController {
-
+    
+    //MARK:- Outlets
     @IBOutlet weak var tblSearchList: UITableView!
     
+    //MARK:- Properties
     let debouncer = Debouncer(timeInterval: 0.3)
     lazy var searchBar: UISearchBar = UISearchBar()
     var searchViewModel = SearchListViewModel()
@@ -31,19 +33,42 @@ class SearchMoviesVC: UIViewController {
         removeSearchBar()
     }
     
+    //MARK:- Initial settings
     func initialConfigurations(){
         self.tblSearchList.register(UINib(nibName: "SearchMovieTVC", bundle: nil), forCellReuseIdentifier: "SearchMovieTVC")
+        self.tblSearchList.estimatedRowHeight = 90
         searchViewModel.delegate = self
         searchViewModel.fetchStoredMovies()
+        self.tblSearchList.tableFooterView = UIView()
+        self.navigationItem.setHidesBackButton(true, animated: true)
+        self.title = "Search"
+        addBackButton()
     }
     
+    //MARK:- Add back to navigation
+    func addBackButton(){
+        let backbutton = UIButton(type: .custom)
+        backbutton.setTitle("Back", for: .normal)
+        backbutton.setTitleColor(UIColor.white, for: .normal)
+        backbutton.addTarget(self, action: #selector(backAction(_:)), for: .touchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backbutton)
+    }
+    
+    @objc func backAction(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    //MARK:- Added search bar on navigation
     func addSearchBarButton() {
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchBtnTapped(_:)))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
         searchBar.delegate = self
+        searchViewModel.searchList.removeAll()
+        searchViewModel.fetchStoredMovies()
     }
       
-    
+    //MARK:- Action to Search bar click event
     @objc func searchBtnTapped(_ sender: UIBarButtonItem) {
         searchViewModel.searchList.removeAll()
         self.navigationItem.rightBarButtonItem = nil
@@ -55,16 +80,19 @@ class SearchMoviesVC: UIViewController {
         searchViewModel.fetchStoredMovies()
     }
            
+    //MARK:- Action to search text change
     @objc func searchBarTextChanged() {
         print(searchBar.searchTextField.text ?? "")
         searchViewModel.searchList.removeAll()
         if searchBar.searchTextField.text != ""{
             searchViewModel.getMovieList(page: searchViewModel.pageNo, query: searchBar.searchTextField.text ?? "")
         }else{
-            self.tblSearchList.reloadData()
+            searchViewModel.fetchStoredMovies()
+           // self.tblSearchList.reloadData()
         }
     }
     
+    //MARK:- Remove search from navigation bar
     func removeSearchBar() {
         self.navigationItem.titleView = nil
         searchBar.text = ""
@@ -73,6 +101,7 @@ class SearchMoviesVC: UIViewController {
 
 }
 
+//MARK:- Tableview Methods to display list
 extension SearchMoviesVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchViewModel.searchList.count
@@ -91,19 +120,20 @@ extension SearchMoviesVC: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        removeSearchBar()
         movieDatabase.saveName(id: "\(searchViewModel.searchList[indexPath.row].id ?? 0)", name: searchViewModel.searchList[indexPath.row].title ?? "", releaseDate: searchViewModel.searchList[indexPath.row].release_date ?? "")
         let dest = UIStoryboard(name: "MovieDetails", bundle: nil).instantiateViewController(withIdentifier: "MovieDetailVC") as! MovieDetailVC
         dest.movieId = searchViewModel.searchList[indexPath.row].id ?? 0
         self.navigationController?.pushViewController(dest, animated: true)
+        removeSearchBar()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return UITableView.automaticDimension
     }
     
 }
 
+//MARK:- Search bar deelegate methods
 extension SearchMoviesVC: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -126,14 +156,17 @@ extension SearchMoviesVC: UISearchBarDelegate {
     
 }
 
+//MARK:- Network call delegate method
 extension SearchMoviesVC : SearchListViewModelOutput{
     
+    //MARK:- Fetch result and display changes
     func onresult(with list: [SearchMovies], pageNo: Int, totalPages: Int) {
         DispatchQueue.main.async {
             self.tblSearchList.reloadData()
         }
     }
     
+    //MARK:- method to display network call failure
     func onFailure(failure: String) {
          DispatchQueue.main.async {
             MovieAlertVC.shared.presentAlertController(title: "Failed", message: failure, completionHandler: nil)

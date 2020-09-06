@@ -9,11 +9,13 @@
 import Foundation
 import SystemConfiguration
 
+// MARK: - Enum for HTTP methods
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
 }
 
+// MARK: - Enum for API end points
 enum Endpoint: String {
     case playing = "/now_playing"
     case movieDetail = ""
@@ -23,6 +25,7 @@ enum Endpoint: String {
     case similar = "/similar"
 }
 
+// MARK: - Enum for API Errors
 enum ApiError: Swift.Error {
     
     case errorMsg(message:String)
@@ -35,6 +38,7 @@ enum ApiError: Swift.Error {
     }
 }
 
+// MARK: - Enum for API response
 enum ResponseError: Error, LocalizedError, Equatable {
     case noData
     case wrongData
@@ -55,12 +59,7 @@ enum ResponseError: Error, LocalizedError, Equatable {
     }
 }
 
-extension URLComponents{
-    mutating func setQueryItems(with parameters: [String: String]) {
-        self.queryItems = parameters.map { URLQueryItem(name: $0.key, value: $0.value) }
-    }
-}
-
+// MARK: - Method to check network connection
 extension WebService {
     
     // possible states for internet access
@@ -119,3 +118,4 @@ extension WebService {
     }
     
 }
+

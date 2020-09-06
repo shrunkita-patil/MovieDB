@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CreditsCVCell: UICollectionViewCell {
 
+    // MARK: - Outlets
     @IBOutlet weak var castImg: UIImageView!
     @IBOutlet weak var castName: UILabel!
     @IBOutlet weak var characterName: UILabel!
@@ -19,31 +21,18 @@ class CreditsCVCell: UICollectionViewCell {
         // Initialization code
     }
 
+    // MARK: - Setup Cast cell
     func setupCastCell(cast: CastModel){
-        self.castImg.image = UIImage(named: "")
-        setImage(from: "\(WebService.shared.imageBaseURL)\(cast.profile_path ?? "")")
+        self.castImg.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(cast.profile_path ?? "")"), placeholder: #imageLiteral(resourceName: "Male_Profile_Placeholder"), options: nil, progressBlock: nil)
         self.castName.text = cast.name
         self.characterName.text = cast.character
     }
     
+    // MARK: - Setup crew cell
     func setupCrewCell(crew: CrewModel){
-        self.castImg.image = UIImage(named: "")
-        setImage(from: "\(WebService.shared.imageBaseURL)\(crew.profile_path ?? "")")
+        self.castImg.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(crew.profile_path ?? "")"), placeholder: #imageLiteral(resourceName: "Male_Profile_Placeholder"), options: nil, progressBlock: nil)
         self.castName.text = crew.name
         self.characterName.text = crew.job
     }
     
-    func setImage(from url: String) {
-        guard let imageURL = URL(string: url) else { return }
-
-            // just not to cause a deadlock in UI!
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: imageURL) else { return }
-
-            let image = UIImage(data: imageData)
-            DispatchQueue.main.async {
-                    self.castImg.image = image
-            }
-        }
-    }
 }

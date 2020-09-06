@@ -43,14 +43,16 @@ class SearchListViewModel: NSObject {
             for movie in 0...storedMovies.movies.count-1{
                 let searchData = SearchMovies(id: Int(storedMovies.movies[movie].value(forKey: "id") as! String), title: storedMovies.movies[movie].value(forKey: "name") as? String, release_date: storedMovies.movies[movie].value(forKey: "releaseDate") as? String)
                 self.searchList.append(searchData)
-                print(searchData)
-                if storedMovies.movies.count > 5{
+                print(self.searchList)
+                if storedMovies.movies.count > 5 && self.searchList.count > 5{
                     self.storedMovies.deleteMovie(id: storedMovies.movies[0].value(forKey: "id") as? String ?? "")
                         self.searchList.remove(at: 0)
                 }
             }
             self.searchList.reverse()
-            self.delegate?.onresult(with: self.searchList, pageNo: 0, totalPages: 0)
+            self.pageNo = 1
+            self.totalpages = 1
+            self.delegate?.onresult(with: self.searchList, pageNo: 1, totalPages: 1)
         }
     }
 
