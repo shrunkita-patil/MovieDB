@@ -19,6 +19,7 @@ class MovieDetailVC: UIViewController {
     @IBOutlet weak var collectionCast: UICollectionView!
     @IBOutlet weak var collectionCrew: UICollectionView!
     @IBOutlet weak var collectionSimilarMovies: UICollectionView!
+    @IBOutlet weak var likes: UILabel!
     
     //MARK:- Properties
     var viewModel = DetailViewModel()
@@ -37,6 +38,7 @@ class MovieDetailVC: UIViewController {
                 let date = self.convertDateFormater(self.synopsis?.release_date ?? "")
                 self.releaseDate.text = date
                 self.title = self.synopsis?.title
+                self.likes.text = "\(self.synopsis?.vote_count ?? 0)"
             }
         }
     }
@@ -107,6 +109,7 @@ class MovieDetailVC: UIViewController {
         dateFormatter.dateFormat = "MMM dd, yyyy"
         return  dateFormatter.string(from: date!)
     }
+
     
 }
 

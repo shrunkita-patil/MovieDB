@@ -30,8 +30,8 @@ class MovieListTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupShadow()
-        self.bookNowBtn.layer.borderColor = UIColor.init(named: "002D51")?.cgColor
-        self.bookNowBtn.layer.borderWidth = 1
+//        self.bookNowBtn.layer.borderColor = UIColor.init(named: "002D51")?.cgColor
+//        self.bookNowBtn.layer.borderWidth = 1
         // Initialization code
     }
 

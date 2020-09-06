@@ -14,7 +14,7 @@ struct MovieDetailModel: Codable {
     let poster_path: String?
     let title: String?
     let release_date: String?
-    var vote_average: Float?
+    var vote_count: Int?
     var overview: String?
     var popularity: Float?
     var status : String?
@@ -24,7 +24,7 @@ struct MovieDetailModel: Codable {
         case poster_path
         case title
         case release_date
-        case vote_average
+        case vote_count
         case overview
         case popularity
         case status
