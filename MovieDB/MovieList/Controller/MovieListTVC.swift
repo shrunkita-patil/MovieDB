@@ -44,7 +44,7 @@ class MovieListTVC: UITableViewCell {
     //MARK:- Setup Movie list details
         func setupCell(movieData:MovieList){
             self.movieId = movieData.id ?? 0
-             self.posterImg.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(movieData.poster_path ?? "")"), placeholder: #imageLiteral(resourceName: "movie-poster"), options: nil, progressBlock: nil)
+             self.posterImg.kf.setImage(with: URL(string: "\(WebService().imageBaseURL)\(movieData.poster_path ?? "")"), placeholder: #imageLiteral(resourceName: "movie-poster"), options: nil, progressBlock: nil)
             self.titleLabel.text = movieData.title
             let date = convertDateFormater(movieData.release_date ?? "")
             self.releaseDateLabel.text = date

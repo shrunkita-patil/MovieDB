@@ -13,8 +13,8 @@ import UIKit
 class WebService {
     
     // MARK: - Properties
-    static let shared = WebService()
-    fileprivate init() {}
+//    static let shared = WebService()
+//    fileprivate init() {}
     private let baseURL = "https://api.themoviedb.org/3" // Base url
     let key = "284ba8bcb404b3212977480790f2f6ec" // Api key
     let imageBaseURL = "https://image.tmdb.org/t/p/w500"

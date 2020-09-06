@@ -12,6 +12,7 @@ import XCTest
 class MovieDBTests: XCTestCase {
     
     let params = ["id":315064] // testing purpose
+    var sut : WebService?
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -20,11 +21,23 @@ class MovieDBTests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    override func setUp() {
+           super.setUp()
+        sut = WebService()
+       }
+
+       override func tearDown() {
+           sut = nil
+           super.tearDown()
+       }
 
     //MARK:- Test movie list
     func testMovieList(){
+         let sut = self.sut!
+        
         let expect = XCTestExpectation(description: "callback")
-        WebService.shared.fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: 0) { (response:Result<MovieListModel,ApiError>, data) in
+       sut.fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: 0) { (response:Result<MovieListModel,ApiError>, data) in
             expect.fulfill()
             switch response{
             case .failure(let error):
@@ -38,9 +51,10 @@ class MovieDBTests: XCTestCase {
     
     //MARK:- Test movie synopsis
     func testMovieSynopsis(){
+         let sut = self.sut!
          let expect = XCTestExpectation(description: "callback")
         //MARK:- Movie synopsis network call
-        WebService.shared.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<MovieDetailModel,ApiError>, data) in
+        sut.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<MovieDetailModel,ApiError>, data) in
             expect.fulfill()
             switch response{
             case .failure(let error):
@@ -54,9 +68,10 @@ class MovieDBTests: XCTestCase {
     
     //MARK:- Test movie credits
     func testMovieCredits(){
+         let sut = self.sut!
          let expect = XCTestExpectation(description: "callback")
         //MARK:- Movie synopsis network call
-        WebService.shared.fetchResponse(endPoint: .credits, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<CreditsModel,ApiError>, data) in
+        sut.fetchResponse(endPoint: .credits, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<CreditsModel,ApiError>, data) in
             expect.fulfill()
             switch response{
             case .failure(let error):
@@ -71,9 +86,10 @@ class MovieDBTests: XCTestCase {
     
     //MARK:- Test similar movie list
    func testMovieSimilarMovies(){
+           let sut = self.sut!
            let expect = XCTestExpectation(description: "callback")
           //MARK:- Movie synopsis network call
-          WebService.shared.fetchResponse(endPoint: .similar, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<MovieListModel,ApiError>, data) in
+          sut.fetchResponse(endPoint: .similar, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<MovieListModel,ApiError>, data) in
               expect.fulfill()
               switch response{
               case .failure(let error):
@@ -87,8 +103,9 @@ class MovieDBTests: XCTestCase {
 
     //MARK:- Test search movies
     func testMovieSearch(){
+         let sut = self.sut!
           let expect = XCTestExpectation(description: "callback")
-        WebService.shared.fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:"te", pageNo: 1) { (response:Result<SearchListModel,ApiError>, data) in
+        sut.fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:"te", pageNo: 1) { (response:Result<SearchListModel,ApiError>, data) in
             expect.fulfill()
              switch response{
              case .failure(let error):

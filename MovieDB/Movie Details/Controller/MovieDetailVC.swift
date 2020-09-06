@@ -31,7 +31,7 @@ class MovieDetailVC: UIViewController {
         didSet {
             DispatchQueue.main.async {
                  // load all data
-                self.posterImg.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(self.synopsis?.poster_path ?? "")"), placeholder: #imageLiteral(resourceName: "movie-poster"), options: nil, progressBlock: nil)
+                self.posterImg.kf.setImage(with: URL(string: "\(WebService().imageBaseURL)\(self.synopsis?.poster_path ?? "")"), placeholder: #imageLiteral(resourceName: "movie-poster"), options: nil, progressBlock: nil)
                 self.movieName.text = self.synopsis?.title
                 self.movieStatus.text = self.synopsis?.status
                 self.movieDescription.text = self.synopsis?.overview

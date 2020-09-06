@@ -22,7 +22,7 @@ class SimilarMoviesCVC: UICollectionViewCell {
     // MARK: - Setup movie cell
     func setupCell(movie: MovieList){
         self.movieName.text = movie.title
-        self.moviePoster.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(movie.poster_path ?? "")"), placeholder: #imageLiteral(resourceName: "movie-poster"), options: nil, progressBlock: nil)
+        self.moviePoster.kf.setImage(with: URL(string: "\(WebService().imageBaseURL)\(movie.poster_path ?? "")"), placeholder: #imageLiteral(resourceName: "movie-poster"), options: nil, progressBlock: nil)
     }
 
 }

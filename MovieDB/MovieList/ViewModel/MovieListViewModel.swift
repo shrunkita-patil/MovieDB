@@ -27,7 +27,7 @@ class MovieListViewModel {
     // MARK: - Method to fetch movie list
     func getMovieList(page:Int){
         delegate?.startAnimating()
-        WebService.shared.fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: page) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
+        WebService().fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: page) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
             self?.delegate?.stopAnimating()
             switch response{
             case .failure(let error):

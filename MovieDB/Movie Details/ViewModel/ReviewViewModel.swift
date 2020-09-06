@@ -26,7 +26,7 @@ class ReviewViewModel: NSObject {
     
     // MARK: - Method to fetch reviews
     func getMovieReviews(parameters:[String:Any],pageNo:Int){
-          WebService.shared.fetchResponse(endPoint: .reviews, withMethod: .get, forParamters: parameters,pageNo: pageNo) { [weak self] (response:Result<ReviewsModel,ApiError>, data) in
+          WebService().fetchResponse(endPoint: .reviews, withMethod: .get, forParamters: parameters,pageNo: pageNo) { [weak self] (response:Result<ReviewsModel,ApiError>, data) in
               switch response{
               case .failure(let error):
                   self?.reviewDelegate?.onFailure(failure: error.errorDescription)

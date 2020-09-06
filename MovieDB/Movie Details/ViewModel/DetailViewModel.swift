@@ -34,7 +34,7 @@ class DetailViewModel: NSObject {
         
         //MARK:- Movie synopsis network call
         dispatchGroup.enter()
-        WebService.shared.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<MovieDetailModel,ApiError>, data) in
+        WebService().fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<MovieDetailModel,ApiError>, data) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)
@@ -47,7 +47,7 @@ class DetailViewModel: NSObject {
         
         //MARK:- Movie credits network call
         dispatchGroup.enter()
-        WebService.shared.fetchResponse(endPoint: .credits, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<CreditsModel,ApiError>, data) in
+        WebService().fetchResponse(endPoint: .credits, withMethod: .get, forParamters: parameters,pageNo: 0) { [weak self] (response:Result<CreditsModel,ApiError>, data) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)
@@ -62,7 +62,7 @@ class DetailViewModel: NSObject {
         
        //MARK:- Similar movies network call
         dispatchGroup.enter()
-        WebService.shared.fetchResponse(endPoint: .similar, withMethod: .get, forParamters: parameters,pageNo: 1) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
+        WebService().fetchResponse(endPoint: .similar, withMethod: .get, forParamters: parameters,pageNo: 1) { [weak self] (response:Result<MovieListModel,ApiError>, data) in
             switch response{
             case .failure(let error):
                 self?.delegate?.onFailure(failure: error.errorDescription)

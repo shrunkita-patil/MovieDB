@@ -23,14 +23,14 @@ class CreditsCVCell: UICollectionViewCell {
 
     // MARK: - Setup Cast cell
     func setupCastCell(cast: CastModel){
-        self.castImg.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(cast.profile_path ?? "")"), placeholder: #imageLiteral(resourceName: "Male_Profile_Placeholder"), options: nil, progressBlock: nil)
+        self.castImg.kf.setImage(with: URL(string: "\(WebService().imageBaseURL)\(cast.profile_path ?? "")"), placeholder: #imageLiteral(resourceName: "Male_Profile_Placeholder"), options: nil, progressBlock: nil)
         self.castName.text = cast.name
         self.characterName.text = cast.character
     }
     
     // MARK: - Setup crew cell
     func setupCrewCell(crew: CrewModel){
-        self.castImg.kf.setImage(with: URL(string: "\(WebService.shared.imageBaseURL)\(crew.profile_path ?? "")"), placeholder: #imageLiteral(resourceName: "Male_Profile_Placeholder"), options: nil, progressBlock: nil)
+        self.castImg.kf.setImage(with: URL(string: "\(WebService().imageBaseURL)\(crew.profile_path ?? "")"), placeholder: #imageLiteral(resourceName: "Male_Profile_Placeholder"), options: nil, progressBlock: nil)
         self.castName.text = crew.name
         self.characterName.text = crew.job
     }

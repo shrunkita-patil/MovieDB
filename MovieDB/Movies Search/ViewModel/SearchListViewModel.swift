@@ -23,7 +23,7 @@ class SearchListViewModel: NSObject {
     
     func getMovieList(page:Int,query:String){
        // delegate?.startAnimating()
-        WebService.shared.fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:query, pageNo: page) { [weak self] (response:Result<SearchListModel,ApiError>, data) in
+        WebService().fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:query, pageNo: page) { [weak self] (response:Result<SearchListModel,ApiError>, data) in
            // self?.delegate?.stopAnimating()
             switch response{
             case .failure(let error):
