@@ -5,7 +5,6 @@ Book tickets for movies.
 # Features!
 
   - Watch latest released, upcoming movies
-  - Search movies
   - Watch recently searched movies
   - Watch movie details , read movie reviews
 
