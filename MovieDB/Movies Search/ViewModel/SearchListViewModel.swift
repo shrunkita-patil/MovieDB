@@ -31,8 +31,7 @@ class SearchListViewModel: NSObject {
     func getMovieList(page:Int,query:String){
         
         // format url string
-        var urlString = "\(webServices.baseURL)/movie"
-        urlString = "\(webServices.baseURL)\(Endpoint.search.rawValue)?api_key=\(webServices.key)"
+        var urlString = "\(webServices.baseURL)\(Endpoint.search.rawValue)?api_key=\(webServices.key)"
         urlString.append("&query=\(query)")
         urlString.append("&page=\(page)")
         print(urlString)

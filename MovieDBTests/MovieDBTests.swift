@@ -34,10 +34,13 @@ class MovieDBTests: XCTestCase {
 
     //MARK:- Test movie list
     func testMovieList(){
-         let sut = self.sut!
-        
+        let sut = self.sut!
+        var urlString = "\(sut.baseURL)/movie"
+        urlString.append("\(Endpoint.playing.rawValue)")
+        urlString.append("?api_key=\(sut.key)")
+        urlString.append("&page=1")
         let expect = XCTestExpectation(description: "callback")
-       sut.fetchResponse(endPoint: .playing, withMethod: .get, forParamters: nil,pageNo: 0) { (response:Result<MovieListModel,ApiError>, data) in
+        sut.fetchResponse(urlString:urlString,withMethod: .get) { (response:Result<MovieListModel,ApiError>) in
             expect.fulfill()
             switch response{
             case .failure(let error):
@@ -52,9 +55,12 @@ class MovieDBTests: XCTestCase {
     //MARK:- Test movie synopsis
     func testMovieSynopsis(){
          let sut = self.sut!
+        var urlString = "\(sut.baseURL)/movie/315064"
+        urlString.append("\(Endpoint.movieDetail.rawValue)")
+        urlString.append("?api_key=\(sut.key)")
          let expect = XCTestExpectation(description: "callback")
         //MARK:- Movie synopsis network call
-        sut.fetchResponse(endPoint: .movieDetail, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<MovieDetailModel,ApiError>, data) in
+        sut.fetchResponse(urlString:urlString,withMethod: .get) { (response:Result<MovieDetailModel,ApiError>) in
             expect.fulfill()
             switch response{
             case .failure(let error):
@@ -69,9 +75,13 @@ class MovieDBTests: XCTestCase {
     //MARK:- Test movie credits
     func testMovieCredits(){
          let sut = self.sut!
+        var urlString = "\(sut.baseURL)/movie/315064"
+        urlString.append("\(Endpoint.credits.rawValue)")
+        urlString.append("?api_key=\(sut.key)")
+        urlString.append("&page=1")
          let expect = XCTestExpectation(description: "callback")
         //MARK:- Movie synopsis network call
-        sut.fetchResponse(endPoint: .credits, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<CreditsModel,ApiError>, data) in
+        sut.fetchResponse(urlString:urlString,withMethod: .get) { (response:Result<CreditsModel,ApiError>) in
             expect.fulfill()
             switch response{
             case .failure(let error):
@@ -87,9 +97,13 @@ class MovieDBTests: XCTestCase {
     //MARK:- Test similar movie list
    func testMovieSimilarMovies(){
            let sut = self.sut!
+            var urlString = "\(sut.baseURL)/movie/315064"
+            urlString.append("\(Endpoint.similar.rawValue)")
+            urlString.append("?api_key=\(sut.key)")
+            urlString.append("&page=1")
            let expect = XCTestExpectation(description: "callback")
           //MARK:- Movie synopsis network call
-          sut.fetchResponse(endPoint: .similar, withMethod: .get, forParamters: params,pageNo: 1) { (response:Result<MovieListModel,ApiError>, data) in
+          sut.fetchResponse(urlString:urlString,withMethod: .get) { (response:Result<MovieListModel,ApiError>) in
               expect.fulfill()
               switch response{
               case .failure(let error):
@@ -104,8 +118,11 @@ class MovieDBTests: XCTestCase {
     //MARK:- Test search movies
     func testMovieSearch(){
          let sut = self.sut!
+        var urlString = "\(sut.baseURL)\(Endpoint.search.rawValue)?api_key=\(sut.key)"
+        urlString.append("&query=te")
+        urlString.append("&page=1")
           let expect = XCTestExpectation(description: "callback")
-        sut.fetchResponse(endPoint: .search, withMethod: .get, forParamters: nil,searchQuery:"te", pageNo: 1) { (response:Result<SearchListModel,ApiError>, data) in
+        sut.fetchResponse(urlString:urlString,withMethod: .get) { (response:Result<SearchListModel,ApiError>) in
             expect.fulfill()
              switch response{
              case .failure(let error):
